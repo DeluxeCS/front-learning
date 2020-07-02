@@ -170,5 +170,5 @@ let node = {
 let { type , name } = node ; 
 ```
 
-## Symbol 及 属性
+## <第六章>私有变量Symbol 及 属性
 
