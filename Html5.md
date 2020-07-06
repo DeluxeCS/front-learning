@@ -32,7 +32,7 @@ input表单 type 自带验证功能
 
 # CSS3
 
-## 2D转换 transform 
+## 2D转换
 
 - 移动 translate
 - 旋转 rotate
@@ -42,7 +42,7 @@ input表单 type 自带验证功能
 
 修改标签在平面的位置
 
-| X,Y水平移动，垂直移动 | transform:translate(X,Y)   |
+| X,Y水平，垂直移动     | transform:translate(X,Y)   |
 | --------------------- | -------------------------- |
 | %相对于自身的像素移动 | transform:translate(X%,Y%) |
 
@@ -70,9 +70,9 @@ transform: translate(10px,10px) rotate(90deg) scale(1.5);
 
 
 
-## 动画部分 
+## 动画部分
 
-定义动画
+定义动画及动画属性
 
 ```css
     /*定义关键帧动画,动画序列*/
@@ -91,4 +91,32 @@ transform: translate(10px,10px) rotate(90deg) scale(1.5);
 	animation: name duration timing-function delay iteration-count direction fill-mode;
 
 ```
+
+| 值                            | 描述                                       |
+| :---------------------------- | :----------------------------------------- |
+| *[animation-name]*            | 规定需要绑定到选择器的 keyframe 名称。。   |
+| *[animation-duration]*        | 规定完成动画所花费的时间，以秒或毫秒计。   |
+| *[animation-timing-function]* | 规定动画的速度曲线。**step()**画面展示步数 |
+| *[animation-delay]*           | 规定在动画开始之前的延迟。                 |
+| *[animation-iteration-count]* | 规定动画应该播放的次数。                   |
+| *[animation-direction]*       | 规定是否应该轮流反向播放动画。             |
+
+## 3D转换
+
+### 位移 translate3d(x,y,z)
+
+### 旋转 rotate(x,y,z)
+
+### 透视 perspective
+
+父元素style设置
+展示在背景上的投影
+
+### 呈现 transfrom-style
+
+```css
+transform-style: preserve-3d; /*代码写给父级影响子盒子*/
+```
+
+
 
