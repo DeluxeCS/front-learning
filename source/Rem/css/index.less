@@ -1,0 +1,120 @@
+/*首页样式*/
+// 引入common.less文件
+@import "common.less";
+@base-font: 75;
+
+body {
+    width: 375 / @base-font;
+    margin: 0 auto;
+    line-height: 1.5;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f2f2f2;
+}
+
+.nav-wrapper {
+    width: 375 / @base-font;
+    height: 88rem / @base-font;
+    margin: 0 auto;
+}
+
+.nav-content {
+    position: relative;
+    background: #ffdb47;
+    height: 90rem / @base-font;
+    width: 375rem / @base-font;
+    margin: 0 auto;
+    font-size: .48rem;
+    line-height: 1.76rem;
+    overflow: hidden;
+    background: url(../images/header-bg.png) no-repeat;
+    background-size: auto;
+    display: flex;
+    flex-flow: column nowrap;
+}
+
+.content-one {
+    width: 341rem / @base-font;
+    height: 44rem / @base-font;
+    margin: 0 17rem / @base-font;
+    display: flex;
+    justify-content: space-between;
+    line-height: 44rem / @base-font;
+
+    a {
+        text-decoration: none;
+        display: flex;
+        justify-content: center;
+    }
+
+    .fenlei {
+        width: 18rem / @base-font;
+        height: 44rem / @base-font;
+
+        img {
+            margin: 7rem / @base-font 0;
+            width: 18rem / @base-font;
+            height: 30rem / @base-font;
+        }
+    }
+
+    .userlogin {
+        width: 18rem / @base-font;
+        height: 44rem / @base-font;
+
+        img {
+            margin: 7rem / @base-font 0;
+            width: 18rem / @base-font;
+            height: 30rem / @base-font;
+        }
+    }
+
+    .gif {
+        flex: 1;
+
+        img {
+            margin: 9rem / @base-font 0 0 0;
+            width: 225rem / @base-font;
+            height: 27.5rem / @base-font;
+        }
+
+    }
+
+}
+
+.content-two {
+    width: 375rem / @base-font;
+    height: 46rem / @base-font;
+    padding: 0 12rem / @base-font;
+
+    .search-box {
+        position: relative;
+        width: 351rem / @base-font;
+        height: 44rem / @base-font;
+
+        .search-icon {
+            position: absolute;
+            width: 18rem / @base-font;
+            height: 18rem / @base-font;
+            top: 7rem / @base-font;
+            left: 10rem / @base-font;
+            background: url(../images/search.png) no-repeat;
+            background-size: 18rem / @base-font 18rem / @base-font;
+        }
+
+        form {
+            height: 44rem / @base-font;
+
+            .input-info {
+                vertical-align: middle;
+                height: 32rem / @base-font;
+                width: 100%;
+                padding: 0 10rem / @base-font 0 32.5rem / @base-font;
+                background: #FFF;
+                font-size: 14rem / @base-font;
+                line-height: 32rem / @base-font;
+                border-radius: 15rem / @base-font;
+                outline: none;
+            }
+        }
+    }
+}

@@ -1,0 +1,138 @@
+/*首页样式*/
+/*设置常见尺寸 修改html-font-size大小*/
+html {
+  font-size: 75px;
+}
+@media screen and (min-wdith: 320px) {
+  html {
+    font-size: 32px;
+  }
+}
+@media screen and (min-wdith: 360px) {
+  html {
+    font-size: 36px;
+  }
+}
+@media screen and (min-wdith: 375px) {
+  html {
+    font-size: 37.5px;
+  }
+}
+@media screen and (min-wdith: 480px) {
+  html {
+    font-size: 48px;
+  }
+}
+@media screen and (min-wdith: 540px) {
+  html {
+    font-size: 54px;
+  }
+}
+@media screen and (min-wdith: 720px) {
+  html {
+    font-size: 72px;
+  }
+}
+@media screen and (min-wdith: 750px) {
+  html {
+    font-size: 75px;
+  }
+}
+body {
+  width: 5;
+  margin: 0 auto;
+  line-height: 1.5;
+  font-family: Arial, Helvetica, sans-serif;
+  background: #f2f2f2;
+}
+.nav-wrapper {
+  width: 5;
+  height: 1.17333333rem;
+  margin: 0 auto;
+}
+.nav-content {
+  position: relative;
+  background: #ffdb47;
+  height: 1.2rem;
+  width: 5rem;
+  margin: 0 auto;
+  font-size: 0.48rem;
+  line-height: 1.76rem;
+  overflow: hidden;
+  background: url(../images/header-bg.png) no-repeat;
+  background-size: auto;
+  display: flex;
+  flex-flow: column nowrap;
+}
+.content-one {
+  width: 4.54666667rem;
+  height: 0.58666667rem;
+  margin: 0 0.22666667rem;
+  display: flex;
+  justify-content: space-between;
+  line-height: 0.58666667rem;
+}
+.content-one a {
+  text-decoration: none;
+  display: flex;
+  justify-content: center;
+}
+.content-one .fenlei {
+  width: 0.24rem;
+  height: 0.58666667rem;
+}
+.content-one .fenlei img {
+  margin: 0.09333333rem 0;
+  width: 0.24rem;
+  height: 0.4rem;
+}
+.content-one .userlogin {
+  width: 0.24rem;
+  height: 0.58666667rem;
+}
+.content-one .userlogin img {
+  margin: 0.09333333rem 0;
+  width: 0.24rem;
+  height: 0.4rem;
+}
+.content-one .gif {
+  flex: 1;
+}
+.content-one .gif img {
+  margin: 0.12rem 0 0 0;
+  width: 3rem;
+  height: 0.36666667rem;
+}
+.content-two {
+  width: 5rem;
+  height: 0.61333333rem;
+  padding: 0 0.16rem;
+}
+.content-two .search-box {
+  position: relative;
+  width: 4.68rem;
+  height: 0.58666667rem;
+}
+.content-two .search-box .search-icon {
+  position: absolute;
+  width: 0.24rem;
+  height: 0.24rem;
+  top: 0.09333333rem;
+  left: 0.13333333rem;
+  background: url(../images/search.png) no-repeat;
+  background-size: 0.24rem 0.24rem;
+}
+.content-two .search-box form {
+  height: 0.58666667rem;
+}
+.content-two .search-box form .input-info {
+  vertical-align: middle;
+  height: 0.42666667rem;
+  width: 100%;
+  padding: 0 0.13333333rem 0 0.43333333rem;
+  background: #FFF;
+  font-size: 0.18666667rem;
+  line-height: 0.42666667rem;
+  border-radius: 0.2rem;
+  outline: none;
+}

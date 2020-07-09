@@ -1,0 +1,39 @@
+/*设置常见尺寸 修改html-font-size大小*/
+html {
+  font-size: 75px;
+}
+@media screen and (min-wdith: 320px) {
+  html {
+    font-size: 32px;
+  }
+}
+@media screen and (min-wdith: 360px) {
+  html {
+    font-size: 36px;
+  }
+}
+@media screen and (min-wdith: 375px) {
+  html {
+    font-size: 37.5px;
+  }
+}
+@media screen and (min-wdith: 480px) {
+  html {
+    font-size: 48px;
+  }
+}
+@media screen and (min-wdith: 540px) {
+  html {
+    font-size: 54px;
+  }
+}
+@media screen and (min-wdith: 720px) {
+  html {
+    font-size: 72px;
+  }
+}
+@media screen and (min-wdith: 750px) {
+  html {
+    font-size: 75px;
+  }
+}
