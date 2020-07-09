@@ -104,17 +104,19 @@ body {
   height: 0.36666667rem;
 }
 .content-two {
-  width: 5rem;
+  width: 4.54666667rem;
   height: 0.61333333rem;
-  padding: 0 0.16rem;
+  padding: 0 0.22666667rem;
 }
 .content-two .search-box {
   position: relative;
-  width: 4.68rem;
+  width: 4.54666667rem;
   height: 0.58666667rem;
 }
 .content-two .search-box .search-icon {
   position: absolute;
+  /*放开注释显示级别*/
+  z-index: 100;
   width: 0.24rem;
   height: 0.24rem;
   top: 0.09333333rem;
@@ -126,11 +128,14 @@ body {
   height: 0.58666667rem;
 }
 .content-two .search-box form .input-info {
+  /*放开注释显示级别*/
+  position: absolute;
   vertical-align: middle;
   height: 0.42666667rem;
   width: 100%;
   padding: 0 0.13333333rem 0 0.43333333rem;
-  background: #FFF;
+  border: #fff;
+  background: #fff;
   font-size: 0.18666667rem;
   line-height: 0.42666667rem;
   border-radius: 0.2rem;
