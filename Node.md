@@ -67,7 +67,7 @@ path.join(' ',' ');
 定义：多个文件组成
 
 - 以js文件封装API接口
-- 以命令行工具的形式存在，辅助项目开发(npmjs.com)
+- 以命令行工具的形式存在，辅助项目开发(**npmjs.com**)
 
 下载：npm install 模块名 ==》》》node_modules
 
@@ -245,12 +245,12 @@ console.log("网站服务器创建成功");
   2. 内容类型(text/html、text/css、application/javascript、text/plain):pig::pig::pig:
 
      ```js
-       res.writeHead(200, {
-         "content-type": "text/html;charset=utf-8", 
-       });
+       res.writeHead(200, {"content-type": "text/html;charset=utf-8"});
      ```
 
-### GET
+### http请求与响应处理
+
+#### GET
 
   请求路径/请求参数，请参数作为**url**的一部分提交到服务器
 
@@ -262,7 +262,7 @@ console.log("网站服务器创建成功");
   console.log(query.age);
   ```
 
-### Post
+#### Post
 
 将数据通过表单进行提交，并获取数据
 
@@ -282,6 +282,40 @@ app.on("request", (req, res) => {
   res.end("数据传输结束");
 });
 ```
+
+#### 路由
+
+#### 静态资源 与 动态资源
+
+user请求路径=》》》服务器绝对路径
+
+```javascript
+const path = require('path');
+// _dirname 当前文件目录的绝对路径
+let realPath = path.join(__dirname, url.parse(req.url).pathname);
+```
+
+:blue_car::car::carousel_horse:
+
+mime：解析url，获取访问资源类型
+
+```js
+const mime = require('mime')  // 第三方模块
+let resType = mime.getType(realPath);
+res.writeHead(200, {
+  "content-type": resType,
+});
+```
+
+#### 同步API 与 异步API
+
+use **回调函数**，获取return值
+
+Node.js执行顺序：同步代码===》》》异步代码
+
+**Promise**
+
+定义：解决按顺序多次进行异步操作 
 
 
 
