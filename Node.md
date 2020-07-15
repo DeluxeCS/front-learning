@@ -307,7 +307,9 @@ res.writeHead(200, {
 });
 ```
 
-#### 同步API 与 异步API
+## Node.js异步编程
+
+### 同步API 与 异步API
 
 use **回调函数**，获取return值
 
@@ -315,7 +317,64 @@ Node.js执行顺序：同步代码===》》》异步代码
 
 **Promise**
 
-定义：解决按顺序多次进行异步操作 
+目的：解决按顺序多次进行异步操作 场景
+
+```js
+// 成功：resolve()   失败： reject()
+function p1() {
+  return new Promise((resolve, reject) => {
+    fs.readFile("./1.txt", "utf-8", (err, res) => {
+      if (err != null) {
+        reject(err);
+      }
+      resolve(res);
+    });
+  });
+}
+// 调用
+p1()
+  .then((res1) => {
+    console.log(res1);
+    return p2();
+  })
+```
+
+关键字**async** 
+
+1. 默认返回**Promise对象**
+2. **throw **抛出异常{代替失败： *reject*}
+3. **return **结果返回{代替成功 ：*resolve*}
+4. 普通函数 =》 异步函数
+5. 调用异步函数，再用**then**获取执行结果
+6. 调用**catch**捕捉异常
+
+关键字 **await**  + Promise() 对象
+
+1. 异步函数内
+2. 暂停异步函数执行，等待Promise有返回结果后，继续执行。
+
+```javascript
+const fs = require("fs");
+// 1.改造node.js中的异步API
+// 2.调用改造后的方法，返回Promise()对象
+const promisify = require('util').promisify; 
+const readFile = promisify(fs.readFile);
+
+async function demo() {
+    // 调用改造后的readFile方法，返回Promise对象
+   let r1 =await readFile("./1.txt", "utf-8");
+   let r2 =await readFile("./2.txt", "utf-8");
+   let r3 =await readFile("./3.txt", "utf-8");
+   console.log(r1);  // 顺序打印
+   console.log(r2);
+   console.log(r3);
+}
+demo(); // 异步函数调用
+```
+
+
+
+
 
 
 
