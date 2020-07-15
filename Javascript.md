@@ -31,10 +31,8 @@ var extend = function (to, from) {
       Object.getOwnPropertyDescriptor(from, property)
     );
   }
-
   return to;
 }
-
 extend({}, { get a(){ return 1 } })
 // { get a(){ return 1 } })
 ```
@@ -108,12 +106,14 @@ B.prototype.constructor = B;
 
 ### 多重继承 Mixin（混入）
 
+```js
 A.call(this);
 B.call(this);
 C.prototype = Object.create(A.prototype);
-继承链追加第二个父类
+// 继承链追加第二个父类
 Object.assign(C.prototype, B.prototype)
 C.prototype.constructor = C;
+```
 
 ### Object 对象
 
@@ -190,7 +190,7 @@ function copyObject(orig) {
              }
            })
          });
-          ```
+         ```
 
    3. 串并结合
 
@@ -256,28 +256,6 @@ Promise  对象、构造函数
 #### 微任务
 
 执行时间 ： **then** >>> **setTImeout(fn, 0)**  then本轮循环结束执行 setTImeout(fn, 0)下轮事件循环开始执行
-
-## DOM
-
-
-
-
-
-### ParentNode 接口
-
-ParentNode.children  只包括元素子节点
-
-ParentNode.append()  尾部追加（元素节点、文本节点）
-ParentNode.prepend() 头部追加（元素节点、文本节点）
-
-### ChildNode 接口
-
-ChildNode.before() 当前位置前加（元素节点、文本节点）
-ChildNode.after() 当前位置后加（元素节点、文本节点）
-
-
-
-
 
 ## 事件
 
