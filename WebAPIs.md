@@ -59,8 +59,124 @@ DOM+BOM
 
    获取：**div.dataset.index**  
 
-   dataset输一个自定义以data开头的属性的集合。
+   **dataset **是一个自定义以data开头的属性的集合。
 
-   
+### 节点操作
 
-   
+   父子级节点、**element.children**
+
+子节点：
+
+element.children[index] 获取所有子元素节点
+
+firstChild，firstElementChild，lastElementChild(**IE9**以上支持)
+
+**节点的追加**
+
+document.wirte('<div>html</div>'); 页面重绘
+
+element.innerHTML(<div>html</div>); 页面追加
+
+**多个元素的场合**
+
+*innerHTML()*  (在不使用拼接字符串场合、使用数组拼接) 效率高
+
+*createElement()* (创建躲过元素，结构清晰) 
+
+克隆(复制)
+
+### 事件高级
+
+传统注册事件 **唯一性**
+
+**监听事件注册**
+
+`EventTarget.addEventListener()` 
+
+IE9以前的版本：
+
+`EventTarget.attachEvent()`
+
+**删除事件**
+
+`EventTarget.removeEventListener()`
+
+IE9以前的版本：
+
+`EventTarget.detachEvent()`
+
+#### DOM事件流
+
+1. 捕获阶段
+2. 目标阶段
+3. 冒泡阶段
+
+ **addEventListener(type， listener[ ，useCapture])** 
+
+第三个参数
+
+TRUE，即事件捕获阶段调用处理程序。
+
+FALSE，表示事件冒泡阶段调用事件处理程序
+
+#### 事件对象
+
+```javascript
+div.addEventLinstener('click', function(e){
+ e = e||window.event // 兼容IE6、7、8
+ console.log(e)
+})
+```
+
+常见属性
+
+`event.target`返回**触发**事件对象（元素）
+
+`this.target`返回**绑定**事件对象（元素）
+
+`event.type`返回用户操作
+
+`event.preventDefault()`阻止默认行为
+
+同理：return false 但后续代码默认不执行
+
+**阻止冒泡事件**
+
+`event.stopPropagation()` 
+
+`window.event.cancelBubble = true` 兼容IE6、7、8
+
+#### 事件委托
+
+目的：元素避免多次注册监听事件，只操作一次DOM，提高程序性能
+
+行为：将监听器设置在其父元素，通过事件对象target属性，获取子元素，事件冒泡至父节点，触发事件监听器。
+
+#### 鼠标键盘事件
+
+keypress 
+
+区分键盘大小写 返回不同ASCII码 不识别功能按键
+
+keyup & keydown 不区分大小写
+
+三者触发事件顺序: keydown --- keypress --- keyup
+
+## BOM(Brower Object Model)
+
+页面加载:
+
+```javascript
+// 等待页面内容全部加载完,再执行(包括图片,dom元素,css等)
+document.addEventLinstener('load', funciton(){});
+// 在DOM加载完,直接执行,(图片,dom元素,css等之后再执行)
+document.addEventLinstener('DOMContentLoaded', funciton(){});
+```
+
+定时器
+
+`setTimeout('回调函数', times);` 调用一次 
+
+`setInterval('回调函数', time)` 循环调用
+
+`clearTimeou(timeID) clearInterval(timeID)`
