@@ -180,3 +180,70 @@ document.addEventLinstener('DOMContentLoaded', funciton(){});
 `setInterval('回调函数', time)` 循环调用
 
 `clearTimeou(timeID) clearInterval(timeID)`
+
+## 画面交互
+
+### 元素偏移量offset 位置
+
+父元素要有**定位**，否则以body为准(**只读属性**)
+
+`offsetTop || offsetLeft ` 元素相对带定位的父级的偏移值
+
+`offsetWidth || offsetHeight` 元素大小，高宽(padding+border+width);
+
+`offsetParent` 返回带定位的父级元素 
+
+**style**<u>只能获取行内样式表中的样式值</u>
+
+### 元素可视区client 大小
+
+`clientTop || clientLeft` 边框大小
+
+`clientWidth || clentHeight` 元素大小，高宽(padding+**~~border~~**+width);
+
+### 立即执行函数
+
+作用：创建独立作用域，避免命名冲突
+
+```javascript
+// 第一种写法 (fun(){})()
+(function (params) {
+      console.log(params);
+    })(param);
+// 第二种写法 (fun(){}())
+(function (params) {
+      console.log(params);
+    }(param));
+```
+
+**Flexible解析**
+
+### 元素滚动scroll 滚动距离
+
+`scrollTop || scrollLeft` 文字移动、隐藏部分的长度
+
+`scrollWidth || scrollHeight` 元素大小，高宽(padding+**~~border~~**+width);
+
+### 动画函数封装
+
+## 数据存储
+
+生命周期：浏览器窗口的关闭
+
+`sessionStorage.setItem(key, value)`
+
+`sessionStorage.getIemt(key)`
+
+`sessionStorage.removeIemt(key)`
+
+`sessionStorage.clear()`
+
+生命周期永久有效，关闭页面也有效
+
+`localStorage.setItem(key, value)`
+
+`localStorage.getIemt(key)`
+
+`localStorage.removeIemt(key)`
+
+`localStorage.clear()`
