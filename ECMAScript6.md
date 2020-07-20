@@ -166,7 +166,7 @@ Object.assign()方法
 ```javascript
 let node = {
     type: "Identifie",
-    name :”foo"
+    name :"foo"
 let { type , name } = node ; 
 ```
 

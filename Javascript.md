@@ -76,20 +76,26 @@ use strict 严格模式
 
 - 对象方法中：方法运行时所在对象
 
+- 绑定事件中：this === 绑定事件对象
+
   **ps**
   避免多层 this，指定不一
-  避免数组（map.foreach）const vm = this   或  map(function(){},this)
+  避免数组（map.foreach）const vm = this   或  `map(function(){},this)`
 
 ### this 切换与绑定
 
-**call**
-call(target_obj , parameter)
+**call()**
+`call(target_obj , parameter)`
 
-**apply**
-apply(target_obj, [array])
+**apply()**
+`apply(target_obj, [array]) `
 
-**bind**
-bind()每次产生新函数，监听事件
+作用：实现数学内置对象最大小值等
+
+`Math.max.apply(Math, [1, 55, 11, 23])`
+
+**bind()**
+bind()每次产生新函数，监听事件，不立即调用原函数
 结合回调函数使用
 
 ## JavaScript 的原型链继承
@@ -98,11 +104,43 @@ bind()每次产生新函数，监听事件
 
 ### 构造函数的继承
 
-一、子类继承父类的实例：
-A.call(this);
-二、子类继承父类的原型：
-B.prototype = Object.create(A.prototype);
-B.prototype.constructor = B;
+#### call()方法
+
+```javascript
+function A(x,y){
+    consol.log(this); //指向的window
+};
+var obj1 = {name:'text'};
+// 1、调用函数
+A.call(this, 1 ,2);
+// 2、改变函数的this指向,这是的指向为obj1
+A.call(obj1, 1 ,2);
+```
+
+#### 子类继承父类的实例及属性
+
+```js
+// 父构造函数
+function Father(name, age){ 
+    this.name = name;  // this指向夫构造函数对象实例
+    this.age = age; 
+}
+function Son(name, age){ 
+    // this指向子构造函数对象实例，利用call方法修改this的指向
+    Father.call(this, name, age)  
+}
+```
+
+
+
+#### 子类继承父类的原型
+
+```javascript
+Son.prototype = Object.create(Father.prototype);
+Son.prototype.constructor = Son;
+```
+
+
 
 ### 多重继承 Mixin（混入）
 
@@ -117,8 +155,37 @@ C.prototype.constructor = C;
 
 ### Object 对象
 
-对象的原型
-现有对象、原型对象
+- 原型(**prototype**)
+
+  定义：构造函数有prototype属性，指向prototype对象，共通方法定义在其中。
+
+  意义：减少内存空间的调用。
+
+- 对象的原型(__proto__)
+
+  实例对象存在proto方法，指向**prototype**原型对象
+
+- 构造函数(**constructor**)
+
+  实例成员 =>> 通过实例化对象访问
+
+  静态成员 =>> 通过构造函数访问
+  
+  构造函数**重写**prototype属性：
+  
+  ```javascript
+  demo.prototype = {
+      constructor : demo, // construct重新指向原构造函数demo
+      test1 : function{},
+      test2 : function{}
+  }
+  ```
+
+#### 拓展内置对象的方法
+
+Array()、List()、String()、Integer()
+
+
 
 ### 对象的拷贝
 
@@ -130,6 +197,12 @@ function copyObject(orig) {
   );
 }
 ```
+
+### 闭包
+
+定义：一定作用域可以访问其他作用域的内部变量，变量所在函数就是闭包。
+
+作用：延伸作用域范围。
 
 ## 异步操作
 
@@ -256,8 +329,6 @@ Promise  对象、构造函数
 #### 微任务
 
 执行时间 ： **then** >>> **setTImeout(fn, 0)**  then本轮循环结束执行 setTImeout(fn, 0)下轮事件循环开始执行
-
-## 事件
 
 
 
