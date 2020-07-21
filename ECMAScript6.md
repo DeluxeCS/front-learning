@@ -23,6 +23,8 @@ var 会发生覆盖
 
 let ,const 在 for-in 和 for-of循环中,每次迭代创建新的绑定.
 
+const 声明变量所在内存地址不可变。基本数据类型不可变，复杂类型内部常量可变。
+
 ## <第二章>字符串和正则表达式
 
 ### codePointAt()方法
@@ -38,10 +40,17 @@ let ,const 在 for-in 和 for-of循环中,每次迭代创建新的绑定.
 
 ### 字符串中的子串识别
 
-1. includes()
-2. startsWith()
-3. endsWith()
-4. repeat() 字符串重复拼接
+1. `includes() `
+
+2. `startsWith()`
+
+3. `endsWith()`
+
+4. `repeat() `字符串重复拼接
+
+5. 模板字符串  **`let a = `这是一个模板字符串 ${function(param)}**
+
+   可解析变量
 
 ## <第三章>函数
 
@@ -57,12 +66,11 @@ ES6.argument对象值与用户传入参数保持一致,不会被改变.
 
 默认参数得临时死区
 
-### 不定参数
-
-函数最多声明**一个**不定参,必须在**末尾**
+### 不定参数（剩余参数）
 
 ```javascript
-function pick(object, ...keys){}
+// 函数最多声明一个不定参,必须在末尾
+function pick(param, ...args[arry]){}
 ```
 
 ### 增强Function函数
@@ -71,13 +79,20 @@ function pick(object, ...keys){}
 var add = new Function('first', 'second = first','return first + second');
 ```
 
-### 展开运算符
+### 扩展运算符
 
-大多数使用apply()方法 ==> 展开运算符方案
+大多数使用apply()方法 ==> 扩展运算符方案
 
 ```javascript
 let values = [-10, -20, -100, -55];
-Math.max(...values, 0);
+// ...values => -10, -20, -100, -55
+Math.max(...values, 0); // 输出结果为0
+// 数组合并
+let arry3 = [...arry1, ...arry2];
+let arry2.push(...arry1);
+// 将伪数组转换为真正的数组
+var oDivs = document.getElementByTagName('div');
+oDivs = [...oDivs];
 ```
 
 ### name属性
@@ -103,10 +118,19 @@ Math.max(...values, 0);
 ### 箭头函数
 
 1. 没有this,super,arguments,new.target绑定
+
+   如果使用this，则指向其定义的对象
+
+   **对象不能产生作用域**
+
 2. 不能通过new关键字调用
+
 3. 没有原型,无prototype
+
 4. 不可改变this绑定
+
 5. 不支持argument对象
+
 6. 不支持重复得命名参数
 
 ### 尾调用优化
@@ -159,7 +183,7 @@ Object.assign()方法
 
 ## <第五章>解构
 
-### 对象的结构
+### 对象的解构
 
 避免，单独的值的一一对应
 
@@ -172,3 +196,17 @@ let { type , name } = node ;
 
 ## <第六章>私有变量Symbol 及 属性
 
+## <第七章>Set
+
+具有成员唯一性。
+
+数组去重
+
+```js
+const set1 = new Set(['a', 'a', 'b', 'b', 'c', 'd']);
+const arry = [...set1]; // ['a', 'b', 'c', 'd']
+```
+
+取值 
+
+`set1.foreach(value => { console.log(value); })`

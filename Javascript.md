@@ -189,6 +189,10 @@ Array()、List()、String()、Integer()
 
 ### 对象的拷贝
 
+浅拷贝
+
+Object.assign(o, target); `
+
 ```javascript
 function copyObject(orig) {
   return Object.create(
@@ -203,6 +207,12 @@ function copyObject(orig) {
 定义：一定作用域可以访问其他作用域的内部变量，变量所在函数就是闭包。
 
 作用：延伸作用域范围。
+
+### 递归
+
+定义：函数内部的自我调用。＋return防止无限循环调用，造成堆栈溢出
+
+**阶乘  斐波那契**
 
 ## 异步操作
 
