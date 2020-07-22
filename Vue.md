@@ -32,6 +32,12 @@ helloworld！
 
 1. 指令 （v-cloak 页面刷新，隐藏画面*{{msg}}*元素 => 插值表达式闪动问题）
 
+   ```css
+   [v-cloak] {
+     display: none;
+   }
+   ```
+
    自定义属性以**v-指令**
 
    v-text v-html(不荐用户提交时使用) v-pre
@@ -49,9 +55,9 @@ helloworld！
    **MVVM设计思想** model - view - (View-Model)
 
    视图-模型 （DOM监听） 模型-视图（事件绑定）
-   
+
    v-on   v-bind 可实现双向数据绑定。
-   
+
    `v-on:input='msg=$event.target.value'`
 
 <img src="mvvm.png" style="zoom:75%;" />
@@ -193,7 +199,22 @@ helloworld！
          },
    ```
 
-   
+6. 生命周期
 
-1. 生命周期
+   挂载、更新、销毁
 
+   1. **beforeCreate** 实例初始化后，数据观测和（event/watcher ）事件配置之前被调用
+   2. **created** 实例创建完成后被调用
+   3. **beforeMount** 在挂载之前被调用
+   4. **mounted** el被新创建的`vm.$el`替换、并挂载到实力上后调用该钩子
+   5. **beforeUpdate** 数据更新时调用、发生在虚拟DOM打出补丁之前
+   6. **updated** 由于数据更改导致虚拟DOM重新渲染画面/打补丁、之后调用该钩子
+   7. **beforeDestroy** 实例销毁之前调用
+   8. **destroyed** 实例销毁后调用
+
+   总结：
+
+   beforecreated：el 和 data 并未初始化
+   created:完成了 data 数据的初始化，el没有，画面**{{message}}**，这是 Virtual DOM（虚拟Dom）技术，先把坑占了。到mounted挂载、再将值渲染进去。
+   beforeMount：完成了 el 和 data 初始化
+   mounted ：完成挂载
