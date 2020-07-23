@@ -196,9 +196,40 @@ let { type , name } = node ;
 
 ## <第六章>私有变量Symbol 及 属性
 
-## <第七章>Set
+定义：每个从`Symbol()`返回的symbol值都是**唯一的**。一个symbol值能作为对象属性的**标识符**；这是该数据类型仅有的目的
 
-具有成员唯一性。
+创建：不支持`new Symbol()`
+
+```js
+let symbol = Symbol(”test symbol"); 
+console.log(typeof symbol);  // symbol
+```
+
+**Symbol 共享体系**
+
+```js
+// 1.全局Symbol注册表检索键：uid Symbol是否存在
+// 2.不存在、则创建一个新的Symbol
+let uid = Symbol.for("uid");
+let obj = {
+  [uid]: "123456",
+};
+// 3.检索存在、直接返回已存在的Symbol
+let uid2 = Symbol.for("uid");
+console.log(obj[uid2]); // '123456'
+```
+
+`Object.getOwnPropertySymbols()`方法的返回值
+
+是一个包含所有 Symbol自有属性的数组
+
+## <第七章>Set && Map
+
+### Set && Weak Set
+
+具有成员唯一性、且为有序列表。
+
+初始化：通过添加数组的形式
 
 数组去重
 
@@ -209,4 +240,54 @@ const arry = [...set1]; // ['a', 'b', 'c', 'd']
 
 取值 
 
-`set1.foreach(value => { console.log(value); })`
+`set1.foreach((value)) => { console.log(value); })`
+
+```js
+let set = new Set();  // 不会进行强制类型转换
+set.add(5);  // 独立存在
+set.add('5'); 
+set.has(5);  // true
+set.delete(5);
+set.clear();
+```
+
+**Weak Set 集合**
+
+**强引用Set集合的弊端**：将对象存储-->Set(同存储至变量中)，Set示例中的引用存在，垃圾回收机制无法释放该对象的内存空间。即为**内存泄漏**的情景
+
+WeakSet 构造函数不接受任何原始值，如果数组中包含其他非对象值 程序会抛出错误。
+
+不支持：for-of循环、不暴露任何迭代器、不支持Size属性、不支持forEach()方法。
+
+```js
+let set = new WeakSet();  // WeakSet构造函数创建Weak Set集合
+key = {}; 
+set.add(key);   // 集合 set 中添加对象 
+console.log(set.has(key));  //true
+set.delete(key); 
+console.log(set.has(key)) ; // false
+```
+
+### Map && Weak Map
+
+定义：储存着许多键值对的有序列表，key接受任意数据类型，独立存在，不强制转换。
+
+初始化：通过添加数组的形式，内部元素为一个子数组(key，value)形式。
+
+**Weak Map集合**
+
+**键名**必须是一个对象、如果使用非对象键名会报错。
+
+作用：Weak 集合最大的用途是保存 Web 页面中 DOM 元素
+
+```JS
+let map = new WeakMap(),
+　　element = document.querySelector(".element");
+map.set(element, "Original");
+let value = map.get(element);
+console.log(value); // "Original"
+element.parentNode.removeChild(element); // 移除元素
+element = null;
+// WeakMap集合中的数据也会被同步清除,避免内存泄漏
+```
+
