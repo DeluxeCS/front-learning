@@ -182,7 +182,9 @@ ajax只能向自己的服务器发送请求、跨域访问违反了**同源策�
 
 ### 同源访问限制
 
-解决方案：JSONP，模拟ajax的**Get**请求
+#### 解决方案一：JSONP
+
+模拟ajax的**Get**请求
 
 核心：script标签可以向非同源服务器发送请求、服务器端返回函数调用的**字符串**，即在客户端作为JS代码执行。客户端提前定义函数。
 
@@ -204,9 +206,9 @@ app.listen(3001); // 监听3000端口
 <script src="http://localhost:3001/test"></script>
 ```
 
-### 优化：
+优化：
 
-### 客户端传递给服务器端的**函数名**
+客户端传递给服务器端的**函数名**
 
 `<script src="http://localhost:3001/better?callback=fn1"></script>  //客户端`
 
@@ -222,7 +224,7 @@ app.get("/better", (req, res) => {
 });
 ```
 
-### JSONP函数封装
+JSONP函数封装
 
 ```js
 // jsonp函数封装
@@ -248,7 +250,7 @@ function jsonp(options) {
 }
 ```
 
-#### 调用
+调用
 
 ```js
 //   添加监听事件
@@ -264,5 +266,23 @@ btn.addEventListener("click", function () {
     },
   });
 });
+```
+
+#### 解决方案二：CORS
+
+跨域资源共享
+
+在服务器端设置允许访问的客户端和访问方式
+
+![](D:\笔记本文件\front-learning\cors.jpg)
+
+```js
+// 拦截所有的请求
+app.use((req, res, next) => {
+    // 1.允许那些客户端访问  *代表所有客户端
+    res.header('Access-Control-Allow-Origin', '*')
+    // 2.访问方式
+    res.header('Access-Control-Allow-Methods', 'post, get')
+})
 ```
 
