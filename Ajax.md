@@ -111,8 +111,158 @@ ajax({
 
 1. 邮箱唯一性验证
 2. 搜索框自动提示
+3. 省市区联动
 
+## FormData
 
+### 对象作用
 
+1. 自动将表单中的数据拼接成请求参数的格式。
+2. 异步上传二级制文件
 
+### 对象使用
+
+```js
+<form id="form">
+    <input type="text" name="uname" id="" />
+    <input type="password" name="pwd" id="" />
+    <input type="button" value="提交" id="btn" />
+  </form>
+  <script>
+    // 获取提交按钮元素
+    var btn = document.getElementById("btn");
+    //   获取表单dom元素
+    var form = document.getElementById("form");
+    //   触发事件
+    btn.addEventListener("click", function () {
+      //   html表单转换表单对象
+      let formData = new FormData(form);
+      // ajax异步交互
+      let ajx = new XMLHttpRequest();
+      ajx.open("post", "http://localhost:3000/formData");
+      ajx.send(formData);
+      ajx.onload = function () {
+        if (ajx.status == 200) {
+          console.log(ajx.responseText);
+        }
+      };
+    });
+  </script>
+```
+
+`formData.get("key")`
+
+`formData.set("name","zs")` 覆盖同名参数值
+
+`formData.delete("key")`
+
+`formData.append("key","value")` 保留两个参数值
+
+### 二进制文件上传
+
+1. 
+
+2. 进度条
+
+   ```js
+   ajx.load.onprogress = function(ev){
+       // ev.loaded 文件已上传多少
+       // ev.total  上传文件总大小
+       var result = (ev.loaded / ev.total) * 100 + '%';
+   }
+   ```
+
+## Ajax限制
+
+ajax只能向自己的服务器发送请求、跨域访问违反了**同源策略**
+
+### 同源
+
+定义：协议(http/https)、域名(www/v2)、端口(80/81)，三者一致
+
+### 同源访问限制
+
+解决方案：JSONP，模拟ajax的**Get**请求
+
+核心：script标签可以向非同源服务器发送请求、服务器端返回函数调用的**字符串**，即在客户端作为JS代码执行。客户端提前定义函数。
+
+```js
+// 服务器
+app.get("/test", (req, res) => {
+  const rs = "fn({uname: 'zs'})";
+  res.send(rs);
+});
+app.listen(3001); // 监听3000端口
+
+// 客户端
+<script>
+  function fn(info) {   // 全局函数
+    console.log(info);
+  }
+</script>
+<!-- 1.将非同源服务器请求地址放在script：src标签中 -->
+<script src="http://localhost:3001/test"></script>
+```
+
+### 优化：
+
+### 客户端传递给服务器端的**函数名**
+
+`<script src="http://localhost:3001/better?callback=fn1"></script>  //客户端`
+
+```js
+// 服务器端
+app.get("/better", (req, res) => {
+  const fname = req.query.callback;  // 通过请求参数确认函数名称
+  const data = JSON.stringify('{uname: 'zs'}');
+  const rs = fname + '(' + data + ')';
+  res.send(rs);
+  // 简化代码
+  res.jsonp({uname: 'zs', age: 11});
+});
+```
+
+### JSONP函数封装
+
+```js
+// jsonp函数封装
+function jsonp(options) {
+  // 1、定义全局函数
+  let fnName = "jsonp" + Math.random().toString().replace(".", "");
+  window[fnName] = options.success;
+  // 2、将非同源服务器请求地址放在script：src标签中
+  let script = document.createElement("script");
+  // 3、拼接字符串变量
+  let parms = "";
+  for (atter in options.data) {
+    parms += "&" + atter + ":" + options.data[atter];
+  }
+  script.src = options.url + "?callback=" + fnName + parms;
+  //  4、画面追加script元素
+  console.log(script);
+  document.body.appendChild(script);
+  //  5、为script追加onload事件，并及时清除script
+  script.onload = function () {
+    document.body.removeChild(script);
+  };
+}
+```
+
+#### 调用
+
+```js
+//   添加监听事件
+btn.addEventListener("click", function () {
+  jsonp({
+    url: "http://localhost:3001/best",
+    data: {
+      uname: "zs",
+      age: 15,
+    },
+    success: function () {
+      console.log(123);
+    },
+  });
+});
+```
 
