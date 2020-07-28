@@ -274,7 +274,7 @@ btn.addEventListener("click", function () {
 
 在服务器端设置允许访问的客户端和访问方式
 
-![](D:\笔记本文件\front-learning\cors.jpg)
+![](cors.jpg)
 
 ```js
 // 拦截所有的请求
@@ -283,6 +283,39 @@ app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*')
     // 2.访问方式
     res.header('Access-Control-Allow-Methods', 'post, get')
+    next();
 })
 ```
 
+#### 解决方案三：服务器端向服务器端发送请求
+
+#### Cookie
+
+服务器端给客户端发身份ID，客户端再次访问持有相应的身份ID就可以识别！
+
+涉及跨域，不随请求发送cookie信息
+
+withCredentials属性：默认false，跨域是否携带cookie
+
+Access-Conrol-Allow-Credentials: true，允许客户端发送请求时携带cookie
+
+## RESTful API 风格
+
+- GET 
+
+  http://www.example.com/users
+
+- POST
+
+- PUT
+
+  http://www.example.com/users/1
+
+  ```js
+  app.put("/users/:id", (req, res) => {
+    const id = req.params.id;
+    res.send("输出ID为${id}");
+  });
+  ```
+
+- DELETE

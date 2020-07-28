@@ -30,7 +30,7 @@ helloworld！
 
 ## Vue模板语法
 
-1. 指令 （v-cloak 页面刷新，隐藏画面*{{msg}}*元素 => 插值表达式闪动问题）
+1. **指令** （v-cloak 页面刷新，隐藏画面*{{msg}}*元素 => 插值表达式闪动问题）
 
    ```css
    [v-cloak] {
@@ -50,7 +50,7 @@ helloworld！
 
    
 
-2. 双向数据绑定 v-model 
+2. **双向数据绑定 v-model** 
 
    **MVVM设计思想** model - view - (View-Model)
 
@@ -62,7 +62,7 @@ helloworld！
 
 <img src="mvvm.png" style="zoom:75%;" />
 
-3. 事件绑定
+3. **事件绑定**
 
    `v-on:click`   `@click`
 
@@ -80,11 +80,11 @@ helloworld！
 
    方法内 ： `event.preventDefault();`
 
-5. 按键修饰符
+5. **按键修饰符**
 
    标签内 ：`@click.keyup.enter='fun()'` 
 
-6. 自定义按键修饰符
+6. **自定义按键修饰符**
 
    `Vue.config.keyCodes.aaa = 65`
    
@@ -94,7 +94,7 @@ helloworld！
 
    简写    ：`<a :href='url'></a>`
 
-8. 样式绑定
+8. **样式绑定**
 
    - class样式处理
 
@@ -110,7 +110,7 @@ helloworld！
 
      数组语法：`<div v-bind:class='[colorStyle, fontSizeStyle]'></div>`
 
-9. 分支循环标签
+9. **分支循环标签**
 
    v-if、v-else、v-else-if **控制元素是否渲染到页面**
 
@@ -124,7 +124,7 @@ helloworld！
 
 ## Vue常用特性
 
-1. 表单操作
+1. **表单操作**
 
    - 单选 =>多选**multiple**
 
@@ -142,7 +142,7 @@ helloworld！
 
      **change事件**：当表单失去鼠标焦点时，触发事件。
 
-2. 自定义指令
+2. **自定义指令**
 
    ```js
    // 以下内容声明在new Vue()之前
@@ -169,13 +169,13 @@ helloworld！
 
    
 
-3. 计算属性 computed
+3. **计算属性 computed**
 
    计算属性：基于依赖（即v-model数据的变化）产生缓存
 
    方法：不产生缓存，每次都会执行。
 
-4. 过滤器 filter
+4. **过滤器 filter**
 
    作用：格式化数据 upper/lower/日期格式化等
 
@@ -183,7 +183,7 @@ helloworld！
 
    `<div v-bind:id="id | upper | lower"></div>`
 
-5. 侦听器 watch
+5. **侦听器 watch**
 
    场景：当数据变化执行异步或开销较大的操作
 
@@ -199,7 +199,7 @@ helloworld！
          },
    ```
 
-6. 生命周期
+6. **生命周期**
 
    挂载、更新、销毁
 
@@ -218,3 +218,74 @@ helloworld！
    created:完成了 data 数据的初始化，el没有，画面**{{message}}**，这是 Virtual DOM（虚拟Dom）技术，先把坑占了。到mounted挂载、再将值渲染进去。
    beforeMount：完成了 el 和 data 初始化
    mounted ：完成挂载
+
+7. **数组相关API**
+
+   **响应式变化**修改相应是数据
+
+   `Vue.set(vm.items, indexOfItem, newValue)`
+
+   `vm.$set(vm.items, indexOfItem, newValue)`
+
+   数组更新检测
+
+   ```swift
+   push() 接收任意数量的参数，把它们逐个添加到数组末尾，并返回修改后数组的长度
+   pop() 从数组末尾移除最后一项，减少数组的length值，然后返回移除的项
+   shift() 移除数组中的第一个项并返回该项，同时数组的长度减1
+   unshift() 在数组前端添加任意个项并返回新数组长度
+   splice() 删除原数组的一部分成员，并可以在被删除的位置添加入新的数组成员
+   sort() 调用每个数组项的toString()方法，然后比较得到的字符串排序，返回经过排序之后的数组
+   reverse() 用于反转数组的顺序，返回经过排序之后的数组
+   ```
+
+   替换数组
+
+   `filter()`、`concat()` 和 `slice()`它们不会变更原始数组，而**总是返回一个新数组**。
+
+   由于 JavaScript 的限制，Vue **不能检测**数组和对象的变化
+
+## Vue组件化开发
+
+1. **全局组件注册**
+
+```js
+// 组件注册
+Vue.component("btn-count", {
+  // data是函数，保证组件内部数据相互独立
+  data: function () {
+    return {
+      count: 0,
+    };
+  },
+  // 必须具备单个根元素，支持ES6模板字符串
+  template: `
+  <div>
+      <button @click="handle" v-text='count'></button>
+      </div>
+  `,
+  methods: {
+    // 方法调用
+    handle: function () {
+      this.count += 2;
+    },
+  },
+});
+```
+
+2. **命名规则**
+
+   驼峰式命名组件、全局作用域下转分隔符**-**连接、在ES6模板字符串中直接使用.
+
+3. **局部组件注册**
+
+   app下只能在其标签下使用
+
+4. Vue调试工具
+
+5. 组件间交互
+
+   - 父---子
+
+     
+
