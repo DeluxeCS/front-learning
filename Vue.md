@@ -70,19 +70,19 @@ helloworld！
 
    阻止冒泡 ：
 
-   标签内 ：`@click.stop='fun()'` 
+   - 标签内 ：`@click.stop='fun()'` 
 
-   方法内 ： `event.stopPropagation();`
+   - 方法内 ： `event.stopPropagation();`
 
    阻止默认行为
 
-   标签内 ：`@click.prevent='fun()'` 
+   - 标签内 ：`@click.prevent='fun()'` 
 
-   方法内 ： `event.preventDefault();`
+   - 方法内 ： `event.preventDefault();`
 
 5. **按键修饰符**
 
-   标签内 ：`@click.keyup.enter='fun()'` 
+   - 标签内 ：`@click.keyup.enter='fun()'` 
 
 6. **自定义按键修饰符**
 
@@ -90,9 +90,9 @@ helloworld！
    
 7. 属性绑定
 
-   标签内 ：`<a v-bind:href='url'></a>`
+   - 标签内 ：`<a v-bind:href='url'></a>`
 
-   简写    ：`<a :href='url'></a>`
+   - 简写    ：`<a :href='url'></a>`
 
 8. **样式绑定**
 
@@ -100,15 +100,15 @@ helloworld！
 
      默认class保留
 
-     对象语法：`<div v-bind:class='{active:isActive}'></div>`
+     - 对象语法：`<div v-bind:class='{active:isActive}'></div>`
 
-     数组语法：`<div v-bind:class='[activeClass, errorClass]'></div>`
+     - 数组语法：`<div v-bind:class='[activeClass, errorClass]'></div>`
 
    - style样式处理
 
-     对象语法：`<div v-bind:style='{color:isActiveColor, fontSize:isActiveFontSize}'></div>`
+     - 对象语法：`<div v-bind:style='{color:isActiveColor, fontSize:isActiveFontSize}'></div>`
 
-     数组语法：`<div v-bind:class='[colorStyle, fontSizeStyle]'></div>`
+     - 数组语法：`<div v-bind:class='[colorStyle, fontSizeStyle]'></div>`
 
 9. **分支循环标签**
 
@@ -275,17 +275,219 @@ Vue.component("btn-count", {
 
 2. **命名规则**
 
-   驼峰式命名组件、全局作用域下转分隔符**-**连接、在ES6模板字符串中直接使用.
+   驼峰式命名组件、全局作用域下转分隔符-连接、在ES6模板字符串中直接使用.
 
 3. **局部组件注册**
 
-   app下只能在其标签下使用
+   局部组件只能在父组件#app的标签下使用
 
 4. Vue调试工具
 
 5. 组件间交互
 
+   props **单向数据流**
+
+   命名规则：
+   
+   props：[驼峰式] 
+   
+   ES6模板字符串：[驼峰式]
+   
+   html标签中：分隔符链接
+   
+   传递参数类型：
+   
+   string
+   
+   number `:pnum="12"` 返回num    `pnum="12"`返回 string
+   
+   boolean 同上
+   
    - 父---子
-
+   
+     父组件：
      
+     ```js
+     var vm = new Vue({ // 声明vue对象
+       el: "#app",
+       data: {
+         brother: '父组件信息',  // 向子组件传递参数
+       },
+     });
+     ```
+     
+     子组件：
+     
+     ```js
+     // 注册子组件
+     Vue.component("btn-son", {
+       data: function () {
+         return {
+           son: "子组件自身数据",
+         };
+       },
+       props: ["brother"],   // 通过prop接收参数
+       // 必须具备单个根元素，支持ES6模板字符串
+       template: `
+       <div>
+           <span>{{brother}}and {{son}}</span>
+           </div>
+       `,
+       methods: {},
+     });
+     ```
+     
+     html调用：
+     
+     ```html
+     <div id="app">
+       <btn-son :brother="brother"></btn-son>
+     </div>
+     ```
+     
+   - 子---父
+   
+     自定义事件向父组件传递消息
+   
+     子组件中
+   
+     `$emit("监听事件名", 传递参数) `
+   
+     父组件中
+   
+     `监听事件名="方法名($event)"`
+   
+     子组件
+   
+     ` <button @click='$emit("conuter-sum", 111)'>数字加1</button>`
+   
+     父组件
+   
+     ```html
+     <div id="app">
+        <btn-son :brother="brother" @conuter-sum="conuter1($event)">
+         </btn-son>
+      </div>
+     ```
+   
+     ```js
+      //   声明vue对象
+      var vm = new Vue({
+        el: "#app",
+        data: {
+          brother: 111,
+        },
+        methods: {
+          conuter1: function (val) {  // 定义监听的方法
+            this.brother += val;
+          },
+        },
+      });
+     ```
+   
+   - 兄弟组件传参
+   
+     兄弟间有个事件中心，负责监听通信
+   
+     ```js
+     var hub = new Vue();  // 事件中心
+     hub.$off("event-sister");  // 删除组件
+     // 兄组件
+     hub.$emit("event-sister", 111); // 触发事件
+     mounted() {
+     // 参数为监听事件名、调用方法、传递的参数
+     hub.$on("event-brother", (val) => { // 监听事件
+       this.num += val;
+     });
+     },
+         // 箭头函数()=>{},兄组件触发妹妹组件中的事件、this指向妹妹组件
+     ```
+   
+6. 组件插槽
 
+   父组件向子组件传递内容(模板字符串)
+
+   在子组件模板字符串中插入
+
+   `<slot name='cc-name'></slot>`
+
+   父组件通过
+
+   ```html
+   <btn-cc>
+   <!-- template用于包裹，不渲染画面 -->
+   <template slot='cc-name'>   
+   <p>这里就是插槽的内容</p>
+   </template>
+   </btn-cc>
+   ```
+
+   作用域插槽
+
+   应用：父组件对子组件内容加工处理
+
+   父组件：插槽内容
+
+   ```html
+   <div id="app">
+     <slot-info :list="list">
+       <template slot-scope="子组件传递数组">
+         <strong v-if="子组件传递数组.绑定数组中的对象.id ==2" class="current">
+           {{子组件传递数组.绑定数组中的对象.name}}
+         </strong>
+       </template>
+     </slot-info>
+   </div>
+   ```
+
+   子组件：插槽定义
+
+   ```js
+   // 声明一个子组件
+   Vue.component("slot-info", {
+     // data: function () {},
+     props: ["list"],
+     template: `
+       <div>
+         <li :key="item.id" v-for="(item, index) in list">
+             <slot :绑定数组中的对象,提供父组件="item">{{item.name}}</slot>  
+             </li>
+       </div>`,
+     methods: {},
+   });
+   ```
+
+## Vue前后端交互
+
+1. 前后端交互模式
+
+   fetch
+
+   axios
+
+2. Promise
+
+   实例方法 then catch finally
+
+   对象方法 （并发，多任务）
+
+   - `Promise.all([p1, p2, p3])`  都结束，才产生结果
+
+   - `Promise.race([p1, p2, p3])`  一个结束、就产生结果
+
+3. fetch
+
+   ```js
+   fetch(url, {
+       method='get | delete',
+       })
+      .then(function (data) {
+      // text()是fetchAPI一部分，返回Promise实例对象，用于获取后台数据
+      return data.text();
+      })
+      .then(function (data) {
+      console.log(data);
+    });    
+   ```
+
+   
