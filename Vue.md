@@ -456,16 +456,16 @@ Vue.component("btn-count", {
      methods: {},
    });
    ```
+   
+## Vue前后端(异步)交互
 
-## Vue前后端交互
-
-1. 前后端交互模式
+7. 前后端交互模式
 
    fetch
 
    axios
 
-2. Promise
+8. Promise
 
    实例方法 then catch finally
 
@@ -475,19 +475,167 @@ Vue.component("btn-count", {
 
    - `Promise.race([p1, p2, p3])`  一个结束、就产生结果
 
-3. fetch
+9. fetch
 
    ```js
    fetch(url, {
-       method='get | delete',
+       method:'post',
+       body:'uname=zs&pwd=123',
+       headers:{
+           'Content-Type':'application/x-www-form-urlencoded',
+       }
        })
-      .then(function (data) {
+      .then((data) => {
+      // text()是fetchAPI一部分，返回Promise实例对象，用于获取后台数据
+      return data.text();
+       // json()返回json格式的对象返回结果
+    return data.json();
+      })
+      .then((data) => {
+      console.log(data.uname);
+    });    
+   ```
+   
+   nodejs
+   
+   ```js
+   app.post('/books',(req, res) => {
+       res.send('POST请求参数', req.body.uname + '---' + req.body.pwd)
+   })
+   ```
+   
+   post / put / delete
+   
+   ```js
+   fetch('url/123', {
+       method:'post | put | delete',
+       body:JSON.stringify({
+           uname: 'zs',
+           age: 123,
+       }),
+       headers:{
+           'Content-Type':'application/json',
+       }
+       })
+      .then((data) => {
       // text()是fetchAPI一部分，返回Promise实例对象，用于获取后台数据
       return data.text();
       })
-      .then(function (data) {
+      .then((data) => {
       console.log(data);
     });    
    ```
-
    
+   nodejs:
+   
+   ```js
+   app.user(bodyParser.json());
+   app.post('/books/:id',(req, res) => {
+       res.send('POST请求参数', req.params.id + '---' + req.body.uname + '---' + req.body.pwd)
+   })
+   ```
+   
+10. axios 
+
+    get
+
+    ```js
+    app.get("/aa", (req, res) => {
+      res.send("hellp");
+    });
+    
+    app.get("/axios", (req, res) => {
+      res.send("返回结果query：" + req.query.id);
+    });
+    
+    app.get("/axios/:id", (req, res) => {
+      res.send("返回结果（Resufl）params：" + req.params.id);
+    });
+    
+    app.get("/getquery", (req, res) => {
+      res.send(req.query.firstName);
+    });
+    ```
+
+    nodejs
+
+    ```js
+    axios
+      .get("http://localhost:3000/axios/1212")
+      .then(function (response) {
+        console.log(response.data);
+      })
+    axios
+      .get("http://localhost:3000/getquery", {
+        params,
+      })
+      .then(function (response) {
+        console.log(response.data);
+      });
+    ```
+
+    post
+
+    ```js
+    // json格式的数据 
+    axios
+       .post("http://localhost:3000/postbody", {
+         username: 11,
+         age: 123,
+       })
+       .then(function (response) {
+         console.log(response.data);
+       });
+    // 表单形式的数据
+     let params = new URLSearchParams();
+     params.append("firstName", "Fred");
+     params.append("lastName", "Flintstone");
+     axios
+       .post("http://localhost:3000/postbody2", params)
+       .then(function (response) {
+         console.log(response.data);
+       });
+    ```
+
+    
+
+    nodejs
+
+    ```js
+    // 创建 application/json 解析
+    var jsonParser = bodyParser.json();
+    // 创建 application/x-www-form-urlencoded 解析
+    var urlencodedParser = bodyParser.urlencoded({ extended: false });
+    
+    // json格式的数据
+    app.post("/postbody", jsonParser, (req, res) => {
+      res.send(req.body);
+    });
+    
+    // 表单形式的数据
+    app.post("/postbody2", urlencodedParser, (req, res) => {
+      res.send(req.body);
+    });
+    
+    ```
+
+11. axios
+
+    - 请求拦截器
+
+    - 响应拦截器
+
+    - 默认值设置
+
+      ` axios.defaults.baseURL = "http://localhost:3000/"; //axios基准路径 `
+
+         
+
+12. async / await
+
+    await 获取异步任务的结果，修饰Promise对象
+
+    async 返回一个Promise对象，通过then()进一步操作。
+
+## Vue前端路由
+
