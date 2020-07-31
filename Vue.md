@@ -639,3 +639,134 @@ Vue.component("btn-count", {
 
 ## Vue前端路由
 
+1. SPA `Single Page Application`
+
+   单页面应用程序：单页面，Ajax局部更新，支持浏览器前进后退。
+
+   实现原理：基于URL的**hash**(hash变化导致浏览历史的变化、不触发新的URL请求，新的页面渲染)
+
+   核心：前端路由
+
+2. 前端路由 Vue Router
+
+   监听事件、触发事件、通过事件函数渲染画面。
+
+   1. 引入vue、vuerouter文件
+
+      windows 下挂载Vue构造函数
+
+      `<script src="https://unpkg.com/vue/dist/vue.js"></script>`  
+
+      windows 下挂载VueRouter构造函数
+
+      `<script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>`
+
+   2. 添加路由链接
+
+      router-link 组件来导航、`to` 属性指定链接、<router-link> 默认会被渲染成一个 `<a>` 标签
+
+      `<router-link to="/foo">Go to Foo</router-link>`
+
+   3. 添加路由填充位（组件将渲染位置）
+
+      `<router-view></router-view>`
+
+   4. 定义路由组件
+
+      `const Foo = { template: '<div>foo</div>' }`
+
+   5. 配置路由规则、创建路由实例
+
+      ```js
+      var router = new VueRouter({
+          // routes 路由规则数组
+          routes = [
+          // 每个路由规则对应一个路由对象
+          // 一个路由对象中至少包含path路径、component组件
+          { path: '/foo', component: Foo },
+          { path: '/bar', component: Bar }
+           ];
+        });
+      ```
+
+   6. 把路由挂载到Vue根实例
+
+      ```js
+      var vm = new Vue({
+          el: "#app",
+          router
+      });
+      ```
+
+   7. 路由重定向
+
+      `{ path: "/", redirect: "/foo" },`
+
+   8. 路由嵌套 children
+
+      ```js
+      {  path: "/foo",
+         component: Foo,
+         children: [
+           { path: "/foo/tab1", component: Tab1 },
+           { path: "/foo/tab2", component: Tab2 },
+         ],
+      },
+      ```
+
+   9. 动态路由匹配
+
+      `     { path: "/foo/:id", component: Foo},`
+
+      访问：`$route.params.id`
+
+      `$route`与路由高度耦合，使用props
+
+      ```js
+      // ++++++++++++++++++++++传参数+++++++++++++++++
+      let Bar = {
+        props: ["id"], // 使用props接收路由参数
+        template: `<h1>Vue路由{{id}}</h1>`,}; 
+      // props:true,route.params 将被设置为组件属性
+      { path: "/bar/:id", component: Bar, props: true },
+      // ++++++++++++++++++++++传对象+++++++++++++++++
+      let Bar = {
+        props: ["uname","age"], // 使用props接收路由参数
+        template: `<h1>Vue路由{{id}}</h1>`,}; 
+      // props:true,route.params 将被设置为组件属性
+      { path: "/bar/:id", component: Bar, props: {uname:'zs',age:123} },
+      //++++++++++++++++++++++++传函数+++++++++++++++    
+      let Bar = {
+        props: ["id", "uname", "age"], // 使用props接收路由参数
+        template: `<h1>Vue路由{{id}}</h1>`,}; 
+      // props:true,route.params 将被设置为组件属性
+      {
+        path: "/bar/:id",
+        component: Bar,
+        props: (route) => ({
+          uname: "zs",
+          age: 123,
+          id: route.params.id,
+        }),
+      },
+      ```
+
+      
+
+   10. vue-router 命名路由
+
+       `<router-link :to="{name:'foo1', params:{id:111}}">Go to Foo</router-link>`
+
+       `name: "foo1",`
+
+   11. 编程式导航
+
+       `this.$router.push('hash地址')`
+
+       `this.$router.go(n)`
+
+       
+
+       
+
+       
