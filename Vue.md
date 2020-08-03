@@ -763,7 +763,7 @@ Vue.component("btn-count", {
 
        `this.$router.push('hash地址')`
 
-       `this.$router.go(n)`
+       `this.$router.go(n)`页面前进后退
 
        
 
