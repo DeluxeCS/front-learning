@@ -73,6 +73,11 @@ path.join(' ',' ');
 
 卸载：npm uninstall 模块名
 
+- `--save` 安装并添加条目到 `package.json` 文件的 dependencies。
+- `--save-dev` 安装并添加条目到 `package.json` 文件的 devDependencies。
+
+区别主要是，`devDependencies` 通常是开发的工具（例如测试的库），而 `dependencies` 则是与生产环境中的应用程序相关
+
 ### nodemon
 
 定义：辅助开发工具，每次修改不必重新运行网站。
