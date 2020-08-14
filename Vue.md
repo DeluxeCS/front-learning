@@ -720,7 +720,7 @@ Vue.component("btn-count", {
 
       访问：`$route.params.id`
 
-      `$route`与路由高度耦合，使用props
+      `$route`与路由高度耦合，使用**[props：true]**
 
       ```js
       // ++++++++++++++++++++++传参数+++++++++++++++++
@@ -757,7 +757,7 @@ Vue.component("btn-count", {
 
        `<router-link :to="{name:'foo1', params:{id:111}}">Go to Foo</router-link>`
 
-       `name: "foo1",`
+       `name: "foo1"
 
    11. 编程式导航
 
