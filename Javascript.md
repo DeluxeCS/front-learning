@@ -2,6 +2,10 @@
 
 # Javascript
 
+## Function方法
+
+
+
 ## Object静态方法
 
 Object.prototype.toString() \ \  返回数据的字符串
