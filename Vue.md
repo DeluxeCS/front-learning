@@ -40,7 +40,11 @@ helloworld！
 
    自定义属性以**v-指令**
 
-   v-text v-html(不荐用户提交时使用) v-pre
+   v-text 
+
+   v-html(不荐用户提交时使用,存在xss攻击的风险) 
+
+   v-pre
 
    **数据响应式** 
 
@@ -206,7 +210,7 @@ helloworld！
    1. **beforeCreate** 实例初始化后，数据观测和（event/watcher ）事件配置之前被调用
    2. **created** 实例创建完成后被调用
    3. **beforeMount** 在挂载之前被调用
-   4. **mounted** el被新创建的`vm.$el`替换、并挂载到实力上后调用该钩子
+   4. **mounted** el被新创建的`vm.$el`替换、并挂载到实例上后调用该钩子
    5. **beforeUpdate** 数据更新时调用、发生在虚拟DOM打出补丁之前
    6. **updated** 由于数据更改导致虚拟DOM重新渲染画面/打补丁、之后调用该钩子
    7. **beforeDestroy** 实例销毁之前调用
